@@ -20,17 +20,22 @@ fun main() {
             else -> println("You have not selected the unit to convert.")
         }
 
-
         println()
     }
 }
 
 // 4. สร้างฟังก์ชันแยกสำหรับการแปลงหน่วย Celsius to Fahrenheit: celsiusToFahrenheit
 // สูตร celsius * 9.0 / 5.0 + 32
+fun celsiusToFahrenheit(celsius: Double): Double {
+    return celsius * 9.0 / 5.0 + 32
+}
 // 🚨
 
 
 // 4. สร้างฟังก์ชันแยกสำหรับการแปลงหน่วย Kilometers to Miles: kilometersToMiles
+ fun kilometersToMiles(kilometers: Double): Double {     /// (ชื่อตัวแปร : ชนิดตัวแปร): ค่าที่รีเทิร์นออกไป
+     return kilometers * 0.621371
+ }
 // สูตร kilometers * 0.621371
 // 🚨
 
@@ -39,14 +44,18 @@ fun main() {
 fun convertCelsiusToFahrenheit() {
     print("ป้อนค่าองศาเซลเซียส (Celsius): ")
     val celsius = readln()
-    val celsiusDouble  = celsius.toDoubleOrNull() ?: return
+    val celsiusDouble  = celsius.toDoubleOrNull() ?: run {                                  //!! Run !!
+        println("Enter number !!")
+        return
+    }
+
     // 5. จัดการ Null Safety ด้วย toDoubleOrNull() และ Elvis operator (?:)
     // ออกจากฟังก์ชัน convertCelsiusToFahrenheit() หากข้อมูลผิดพลาด: return
     // celsius
     // 🚨
 
 
-    val fahrenheitResult = ((celsiusDouble * 9.0) / 5.0) + 32
+    val fahrenheitResult = celsiusToFahrenheit(celsiusDouble)
 
     // 6. แสดงผลลัพธ์
     // ใช้ String format เพื่อแสดงทศนิยม 2 ตำแหน่ง
@@ -64,7 +73,7 @@ fun convertKilometersToMiles() {
     // 🚨
 
     // สูตร kilometers * 0.621371
-   val milesResult = kilometers * 0.621371
+   val milesResult = kilometersToMiles(kilometers)
 
     // 6. แสดงผลลัพธ์
     println("ผลลัพธ์: $kilometers km เท่ากับ ${"%.2f".format(milesResult)} miles")
