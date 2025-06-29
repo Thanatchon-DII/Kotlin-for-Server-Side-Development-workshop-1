@@ -27,29 +27,30 @@ fun main() {
     // กรองสินค้าที่ราคามากกว่า 500
     // ดึงเฉพาะราคาออกมาเป็น List<Double>
     // หาผลรวมของราคา
-    val totalElecPriceOver500 = products
-        .filter { it.category == "Electronics" }
-        .filter { it.price > 500 }
-        .map { it.price }
-        .sum()
+    val totalElecPriceOver500 = calculateTotalElectronicsPriceOver500(products)
 
     println("วิธีที่ 1: ใช้ Chaining กับ List")
     println("ผลรวมราคาสินค้า Electronics ที่ราคา > 500 บาท: $totalElecPriceOver500 บาท")
     println("--------------------------------------------------")
 
+    val countAllElectronicsOver500 = countElectronicsOver500(products)
+    println("เป็นการใช้ .count ในการนับ จน. สินค้า")
+    println("จำนวนสินค้าที่ Electronics ที่ราคา > 500 บาท: $countAllElectronicsOver500 ชิ้น")
+    println("--------------------------------------------------")
 
     // 4. (ขั้นสูง) วิธีที่ 2: การใช้ .asSequence() เพื่อเพิ่มประสิทธิภาพ
     // แปลง List เป็น Sequence ก่อนเริ่มประมวลผล
-    val totalElecPriceOver500Sequence = products
-        .asSequence()
-        .filter { it.category == "Electronics" }
-        .filter { it.price > 500 }
-        .map { it.price }
-        .sum()
+    /*--( Day 1 : ที่เทียบว่า .asSequence() นั้นทำได้เร็วกว่า )--*/
+    //val totalElecPriceOver500Sequence = products
+    //    .asSequence()
+    //    .filter { it.category == "Electronics" }
+    //    .filter { it.price > 500 }
+    //    .map { it.price }
+    //    .sum()
 
-    println("วิธีที่ 2: ใช้ .asSequence() (ขั้นสูง)")
-    println("ผลรวมราคาสินค้า Electronics ที่ราคา > 500 บาท: $totalElecPriceOver500Sequence บาท")
-    println("--------------------------------------------------")
+    //println("วิธีที่ 2: ใช้ .asSequence() (ขั้นสูง)")
+    //println("ผลรวมราคาสินค้า Electronics ที่ราคา > 500 บาท: $totalElecPriceOver500Sequence บาท")
+    //println("--------------------------------------------------")
 
 
     println("อภิปรายความแตกต่างระหว่าง List และ Sequence:")
@@ -66,3 +67,15 @@ fun main() {
     println("   - จะไม่มีการสร้าง Collection กลางทาง ทำให้ประหยัดหน่วยความจำและเร็วกว่ามากสำหรับชุดข้อมูลขนาดใหญ่ เพราะทำงานกับข้อมูลทีละชิ้นและทำทุกขั้นตอนให้เสร็จในรอบเดียว")
     println("   - การคำนวณจะเกิดขึ้นเมื่อมี 'Terminal Operation' มาเรียกใช้เท่านั้น (ในที่นี้คือ .sum())")
 }
+    // ฟังก์ชันที่ใช้สำหรับทดสอบ
+    fun calculateTotalElectronicsPriceOver500(products: List<Product>): Double {
+        return products
+            .filter { it.category == "Electronics" }
+            .filter { it.price > 500 }
+            .sumOf { it.price }
+    }
+
+    fun countElectronicsOver500(products: List<Product>): Int {
+        return products
+            .count { it.category == "Electronics" && it.price > 500 }
+    }

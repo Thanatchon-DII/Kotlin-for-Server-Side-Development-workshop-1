@@ -1,10 +1,6 @@
+import org.example.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import org.example.celsiusToFahrenheit
-import org.example.kilometersToMiles
-import org.example.calculateTotalElectronicsPriceOver500
-import org.example.countElectronicsOver500
-
 
 
 class WorkshopTest {
